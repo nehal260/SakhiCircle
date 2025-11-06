@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cycle Tracker | SakhiCircle</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff5f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        header {
+            background-color: #ffb6c1;
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            color: #b3005e;
+            font-size: 1.8rem;
+        }
+        
+        main {
+            flex: 1;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        form {
+            background-color: #ffe3ec;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 1rem;
+            font-weight: 500;
+            color: #b3005e;
+        }
+        
+        input,
+        select {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1.5px solid #ff99bb;
+            border-radius: 8px;
+            margin-top: 0.4rem;
+            font-size: 1rem;
+        }
+        
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #ff69b4;
+            background-color: #fff0f6;
+        }
+        
+        button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: 0.3s;
+        }
+        
+        button:hover {
+            background-color: #e75480;
+            transform: scale(1.05);
+        }
+        
+        .message {
+            margin-top: 1.5rem;
+            color: #6b003b;
+            font-weight: 500;
+        }
+        
+        footer {
+            background-color: #ffd6dc;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1rem;
+            color: #6b003b;
+            margin-top: auto;
+        }
+        
+        .end-line {
+            margin-top: 0.5rem;
+            font-size: 1.2rem;
+            color: #b3005e;
+        }
+        
+        .back-btn {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.3rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1.5rem;
+            transition: 0.3s;
+        }
+        
+        .back-btn:hover {
+            background-color: #e75480;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>🌷 Track Your Cycle, Know Your Body</h1>
+    </header>
+
+    <main>
+        <p>
+            Understanding your menstrual cycle helps you stay healthy and confident. Fill out the form below to record your dates and symptoms.
+        </p>
+
+        <form id="cycleForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+
+            <label for="lastPeriod">Date of Last Period:</label>
+            <input type="date" id="lastPeriod" required>
+
+            <label for="cycleLength">Average Cycle Length (days):</label>
+            <input type="number" id="cycleLength" placeholder="e.g., 28" required>
+
+            <label for="symptoms">Symptoms:</label>
+            <select id="symptoms" required>
+        <option value="">Select one</option>
+        <option value="Cramps">Cramps</option>
+        <option value="Fatigue">Fatigue</option>
+        <option value="Mood Swings">Mood Swings</option>
+        <option value="Headache">Headache</option>
+        <option value="None">None</option>
+      </select>
+
+            <button type="submit">Save Record</button>
+        </form>
+
+        <p class="message" id="message">Our system will soon include smart cycle prediction & insights! 🌸</p>
+
+        <button class="back-btn" onclick="goHome()">⬅ Back to Home</button>
+    </main>
+
+    <footer>
+        <p>────────────── 🌷 ──────────────</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('cycleForm');
+        const message = document.getElementById('message');
+
+        // Function to request notification permission
+        function requestNotificationPermission() {
+            if ('Notification' in window) {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        console.log('Notification permission granted.');
+                    } else {
+                        console.log('Notification permission denied.');
+                    }
+                });
+            }
+        }
+
+        // Function to show notification
+        function showCycleReminder(name) {
+            const title = "🌸 Gentle Reminder from SakhiCircle";
+            const body = `Hi ${name}, your period might be starting in 1-2 days. Stay prepared and take care! 💖`;
+
+            if (Notification.permission === 'granted') {
+                new Notification(title, {
+                    body: body,
+                    icon: 'images/WhatsApp Image 2025-10-29 at 18.09.08_2ee8b97f.jpg'
+                }); // Logo here
+            } else {
+                // Fallback: Show an in-page alert
+                alert(body);
+            }
+        }
+
+        // Function to check and trigger reminder on page load
+        function checkForReminder() {
+            const storedData = localStorage.getItem('cycleData');
+            if (storedData) {
+                const userData = JSON.parse(storedData);
+                const reminderDate = localStorage.getItem('cycleReminderDate');
+                if (reminderDate) {
+                    const today = new Date().toDateString();
+                    if (today === new Date(reminderDate).toDateString()) {
+                        showCycleReminder(userData.name);
+                        // Clear the reminder to avoid repeating
+                        localStorage.removeItem('cycleReminderDate');
+                    }
+                }
+            }
+        }
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const userData = {
+                name: document.getElementById('name').value,
+                lastPeriod: document.getElementById('lastPeriod').value,
+                cycleLength: parseInt(document.getElementById('cycleLength').value),
+                symptoms: document.getElementById('symptoms').value
+            };
+
+            // Calculate current phase 
+            const today = new Date();
+            const lastPeriodDate = new Date(userData.lastPeriod);
+            const daysSinceLastPeriod = Math.floor((today - lastPeriodDate) / (1000 * 60 * 60 * 24)) + 1;
+            const currentDay = ((daysSinceLastPeriod - 1) % userData.cycleLength) + 1;
+
+            let phase = '';
+            let selfCareMessage = '';
+
+            if (currentDay >= 1 && currentDay <= 5) {
+                phase = 'Menstruation';
+                selfCareMessage = 'Take it easy, stay hydrated, and use a heating pad for cramps. Rest and nourish your body with iron-rich foods.';
+            } else if (currentDay >= 6 && currentDay <= 13) {
+                phase = 'Follicular Phase';
+                selfCareMessage = 'Energy is rising! Focus on light exercise, eat nutrient-dense foods, and plan for your goals.';
+            } else if (currentDay === 14) {
+                phase = 'Ovulation';
+                selfCareMessage = 'Fertility peak! Stay active, maintain a balanced diet, and listen to your body for any changes.';
+            } else if (currentDay >= 15 && currentDay <= userData.cycleLength) {
+                phase = 'Luteal Phase';
+                selfCareMessage = 'Wind down gently. Practice self-care with relaxation, magnesium-rich foods, and gentle yoga to ease PMS.';
+            } else {
+                phase = 'Unknown (Cycle data may be inaccurate)';
+                selfCareMessage = 'Consult a healthcare professional for personalized advice.';
+            }
+
+            // Save data to local storage
+            localStorage.setItem('cycleData', JSON.stringify(userData));
+
+            // Calculate next period date and reminder (2 days before)
+            const nextPeriodDate = new Date(lastPeriodDate);
+            nextPeriodDate.setDate(lastPeriodDate.getDate() + userData.cycleLength);
+            const reminderDate = new Date(nextPeriodDate);
+            reminderDate.setDate(nextPeriodDate.getDate() - 2); // 2 days before
+
+            // Store reminder date
+            localStorage.setItem('cycleReminderDate', reminderDate.toISOString());
+
+            message.innerHTML = `💖 Record saved successfully, ${userData.name}! <br> Your current phase: <strong>${phase}</strong>. <br> Self-care tip: ${selfCareMessage} <br> 🌟 Reminder set for 2 days before your next period!`;
+
+            form.reset();
+        });
+
+        function goHome() {
+            window.location.href = "index.html";
+        }
+
+        // On page load: Request permission and check for reminders
+        window.addEventListener('load', () => {
+            requestNotificationPermission();
+            checkForReminder();
+        });
+    </script>
+</body>
+
+</html>

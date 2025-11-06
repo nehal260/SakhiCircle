@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SakhiCircle | Your Friendly Menstrual Health Companion</title>
+    <style>
+         :root {
+            --bg-color: #fff5f8;
+            --text-color: #333;
+            --header-bg: #ffb6c1;
+            --card-bg: #ffe3ec;
+            --button-bg: #ff69b4;
+            --button-hover: #e75480;
+            --footer-bg: #ffd6dc;
+            --accent: #b3005e;
+        }
+        
+        .dark-mode {
+            --bg-color: #2d1b2a;
+            /* Deep purple background for dark mode */
+            --text-color: #f8e1f8;
+            /* Light lavender text */
+            --header-bg: linear-gradient(135deg, #5d3a5d, #7b4f7b);
+            /* Dark purple gradient */
+            --card-bg: #3e2a3e;
+            /* Muted purple cards */
+            --button-bg: #ab47bc;
+            /* Purple buttons */
+            --button-hover: #8e24aa;
+            /* Darker purple hover */
+            --footer-bg: #4a2a4a;
+            /* Dark purple footer */
+            --accent: #ce93d8;
+            /* Light purple accent */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        /* Navbar */
+        
+        nav {
+            background-color: var(--header-bg);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        nav img {
+            width: 50px;
+            height: auto;
+            margin-right: 1rem;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+        
+        nav h1 {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .quick-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .quick-btn {
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .quick-btn:hover,
+        .quick-btn:focus {
+            background-color: var(--button-hover);
+            transform: scale(1.05);
+            outline: 2px solid var(--accent);
+        }
+        /* Header */
+        
+        header {
+            background-color: var(--header-bg);
+            text-align: center;
+            padding: 3rem 1rem;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight {
+            color: var(--button-bg);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        
+        .hero-btn {
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 1rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .hero-btn:hover,
+        .hero-btn:focus {
+            background-color: var(--button-hover);
+            transform: scale(1.05);
+            outline: 2px solid var(--accent);
+        }
+        /* Main */
+        
+        main {
+            flex: 1;
+            padding: 2rem;
+        }
+        
+        .section {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            text-align: center;
+        }
+        
+        .intro {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-card h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .testimonials {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+        }
+        
+        .testimonials h2 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-card blockquote {
+            font-style: italic;
+            color: var(--text-color);
+        }
+        
+        .testimonial-card cite {
+            display: block;
+            margin-top: 0.5rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        
+        .feedback-form {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .feedback-form h3 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .feedback-form input,
+        .feedback-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .feedback-form button {
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .feedback-form button:hover,
+        .feedback-form button:focus {
+            background-color: var(--button-hover);
+            outline: 2px solid var(--accent);
+        }
+        
+        .info-section {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+        }
+        
+        .info-section h2 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .info-section p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .share {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+        
+        .share h2 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .share p {
+            margin-bottom: 1rem;
+        }
+        
+        .share-link {
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .share-link:hover,
+        .share-link:focus {
+            background-color: var(--button-hover);
+            transform: scale(1.05);
+            outline: 2px solid var(--accent);
+        }
+        /* Footer */
+        
+        footer {
+            background-color: var(--footer-bg);
+            text-align: center;
+            padding: 1rem;
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-top: auto;
+        }
+        
+        .end-line {
+            margin-top: 0.5rem;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+        /* Responsive */
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .quick-buttons {
+                justify-content: center;
+            }
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <img src="images/sakhicircle-logo.png" alt="SakhiCircle Logo" style="width: 50px; height: auto; border-radius: 50%;">
+            <h1>SakhiCircle</h1>
+        </div>
+        <div class="quick-buttons">
+            <a href="index.html" class="quick-btn" title="Go to Home Page">Home</a>
+            <a href="quiz.html" class="quick-btn" title="Take the Awareness Quiz">Quiz</a>
+            <a href="cycle-tracker.html" class="quick-btn" title="Track Your Cycle">Tracker</a>
+            <a href="donate.html" class="quick-btn" title="Donate Menstrual Products">Donate</a>
+            <a href="about.html" class="quick-btn" title="Learn About Us">About Us</a>
+            <a href="#share-experience" class="quick-btn" title="Share Your Experience">Share Exp</a>
+            <button id="themeToggle" class="quick-btn" aria-label="Toggle Dark Mode">🌙 Dark Mode</button>
+        </div>
+    </nav>
+
+    <!-- Header/Hero Section -->
+    <header>
+        <h1>Welcome to <span class="highlight">SakhiCircle</span></h1>
+        <p class="subtitle">Your Friendly Menstrual Health Companion</p>
+        <p>Empowering women with knowledge, tracking, and community support for better menstrual health.</p>
+        <a href="cycle-tracker.html" title="Track Your Cycle"><button class="hero-btn" aria-label="Start Tracking Your Cycle">Start Tracking Now</button></a>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <section class="section intro">
+            <p>
+                At <strong>SakhiCircle</strong>, we believe menstrual health deserves awareness, empathy, and technology. Our platform combines cycle tracking, awareness quizzes, AI-based support, and social contribution through donations — all in one
+                circle of care. Join thousands of women taking control of their health journey.
+            </p>
+        </section>
+
+        <section class="section features">
+            <div class="feature-card">
+                <h3>🌸 Cycle Tracking</h3>
+                <p>Track your menstrual cycle effortlessly with personalized insights, phase predictions, and self-care tips tailored just for you.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🧠 Awareness Quizzes</h3>
+                <p>Learn about menstrual health through fun, interactive quizzes that educate and empower you with accurate information.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🤝 Donate & Help</h3>
+                <p>Contribute to the community by donating menstrual products and supporting those in need. Make a difference today!</p>
+            </div>
+            <div class="feature-card">
+                <h3>💬 AI Support</h3>
+                <p>Get instant answers to your questions with our AI-powered chatbot, providing reliable advice and guidance.</p>
+            </div>
+        </section>
+
+        <section id="share-experience" class="section testimonials">
+            <h2>What Users Say</h2>
+            <div class="testimonial-grid" id="testimonialGrid">
+                <div class="testimonial-card">
+                    <blockquote>"SakhiCircle helped me understand my cycle better and feel more confident!"</blockquote>
+                    <cite>- Anonymous User</cite>
+                </div>
+                <div class="testimonial-card">
+                    <blockquote>"The quizzes are fun and informative. I learned so much about myths!"</blockquote>
+                    <cite>- Anonymous User</cite>
+                </div>
+                <div class="testimonial-card">
+                    <blockquote>"Tracking my periods has never been easier. Love the reminders!"</blockquote>
+                    <cite>- Anonymous User</cite>
+                </div>
+                <!-- Dynamic testimonials will be added here -->
+            </div>
+            <div class="feedback-form">
+                <h3>Share Your Experience</h3>
+                <input type="text" id="userName" placeholder="Your Name (optional)" aria-label="Enter your name">
+                <textarea id="userFeedback" placeholder="Share your feedback or experience..." rows="4" required aria-label="Share your feedback"></textarea>
+                <button onclick="submitFeedback()" aria-label="Submit your feedback">Submit</button>
+                <p id="feedbackMessage" style="margin-top: 1rem; color: var(--accent);"></p>
+            </div>
+        </section>
+
+        <section class="section info-section">
+            <h2>🌟 Did You Know?</h2>
+            <p>Menstrual cycles can vary greatly among individuals, and what's normal for one person may not be for another. Factors like stress, diet, and exercise can influence cycle length and symptoms. Remember, tracking your cycle helps in early detection
+                of potential health issues. Always consult a healthcare professional for personalized advice.</p>
+            <p>Fun fact: The average menstrual cycle is 28 days, but cycles ranging from 21 to 35 days are considered normal. Stay informed and empowered with SakhiCircle!</p>
+        </section>
+
+        <section class="section share">
+            <h2>🔗 Share Our Website</h2>
+            <p>Copy and share our website link with your friends and help spread awareness about menstrual health.</p>
+            <button class="share-link" onclick="copyLink()" aria-label="Copy website link">Copy Link</button>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 SakhiCircle. All rights reserved.</p>
+        <p class="end-line">Empowering women, one cycle at a time.</p>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            themeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+
+        // Submit feedback and add to testimonials
+        function submitFeedback() {
+            const name = document.getElementById('userName').value || 'Anonymous User';
+            const feedback = document.getElementById('userFeedback').value;
+            const message = document.getElementById('feedbackMessage');
+
+            if (feedback.trim() === '') {
+                message.textContent = 'Please enter your feedback.';
+                return;
+            }
+
+            // Create new testimonial card
+            const testimonialGrid = document.getElementById('testimonialGrid');
+            const newCard = document.createElement('div');
+            newCard.className = 'testimonial-card';
+            newCard.innerHTML = `
+                <blockquote>"${feedback}"</blockquote>
+                <cite>- ${name}</cite>
+            `;
+            testimonialGrid.appendChild(newCard);
+
+            // Clear form and show success message
+            document.getElementById('userName').value = '';
+            document.getElementById('userFeedback').value = '';
+            message.textContent = 'Your experience has been saved successfully!';
+
+            // Clear message after 3 seconds
+            setTimeout(() => {
+                message.textContent = '';
+            }, 3000);
+        }
+
+        // Copy link function
+        function copyLink() {
+            const link = window.location.href;
+            navigator.clipboard.writeText(link).then(() => {
+                alert('Link copied to clipboard!');
+            });
+        }
+    </script>
+</body>
+
+</html>

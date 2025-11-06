@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SakhiCircle | Login / Sign Up</title>
+    <style>
+         :root {
+            --bg-color: #fff5f8;
+            --text-color: #333;
+            --header-bg: #ffb6c1;
+            --card-bg: #ffe3ec;
+            --button-bg: #ff69b4;
+            --button-hover: #e75480;
+            --footer-bg: #ffd6dc;
+            --accent: #b3005e;
+        }
+        
+        .dark-mode {
+            --bg-color: #2d1b2a;
+            --text-color: #f8e1f8;
+            --header-bg: linear-gradient(135deg, #5d3a5d, #7b4f7b);
+            --card-bg: #3e2a3e;
+            --button-bg: #ab47bc;
+            --button-hover: #8e24aa;
+            --footer-bg: #4a2a4a;
+            --accent: #ce93d8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        nav {
+            background-color: var(--header-bg);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        nav .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        nav img {
+            width: 50px;
+            height: auto;
+            margin-right: 1rem;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+        
+        nav h1 {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .theme-toggle {
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        
+        .theme-toggle:hover,
+        .theme-toggle:focus {
+            background-color: var(--button-hover);
+            transform: scale(1.05);
+            outline: 2px solid var(--accent);
+        }
+        
+        main {
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .auth-container {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .auth-container h2 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+        
+        .auth-btn {
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        
+        .auth-btn:hover,
+        .auth-btn:focus {
+            background-color: var(--button-hover);
+            transform: scale(1.05);
+            outline: 2px solid var(--accent);
+        }
+        
+        .toggle-form {
+            margin-top: 1rem;
+            color: var(--accent);
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        .message {
+            margin-top: 1rem;
+            color: var(--accent);
+        }
+        
+        footer {
+            background-color: var(--footer-bg);
+            text-align: center;
+            padding: 1rem;
+            font-size: 1rem;
+            color: var(--text-color);
+            margin-top: auto;
+        }
+        
+        .end-line {
+            margin-top: 0.5rem;
+            font-size: 1.2rem;
+            color: var(--accent);
+        }
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav>
+        <div class="logo">
+            <img src="images/WhatsApp Image 2025-10-29 at 18.09.08_2ee8b97f.jpg" alt="SakhiCircle Logo">
+            <h1>SakhiCircle</h1>
+        </div>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">🌙 Dark Mode</button>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="auth-container">
+            <div id="loginForm">
+                <h2>Login</h2>
+                <form id="login">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Login</button>
+                </form>
+                <p class="toggle-form" onclick="showSignup()">Don't have an account? Sign Up</p>
+            </div>
+
+            <div id="signupForm" style="display: none;">
+                <h2>Sign Up</h2>
+                <form id="signup">
+                    <div class="form-group">
+                        <label for="signupName">Name</label>
+                        <input type="text" id="signupName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email</label>
+                        <input type="email" id="signupEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Sign Up</button>
+                </form>
+                <p class="toggle-form" onclick="showLogin()">Already have an account? Login</p>
+            </div>
+
+            <p id="message" class="message"></p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 SakhiCircle. All rights reserved.</p>
+        <p class="end-line">Empowering women, one cycle at a time.</p>
+    </footer>
+
+    <script>
+        // Dark mode toggle
+        const themeToggle = document.getElementById('themeToggle');
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            themeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️ Light Mode' : '🌙 Dark Mode';
+        });
+
+        // Show signup form
+        function showSignup() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('message').textContent = '';
+        }
+
+        // Show login form
+        function showLogin() {
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('message').textContent = '';
+        }
+
+        // Handle signup
+        document.getElementById('signup').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+
+            // Simple validation
+            if (name && email && password) {
+                // Store user data in localStorage (for demo purposes)
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const existingUser = users.find(user => user.email === email);
+                if (existingUser) {
+                    document.getElementById('message').textContent = 'Email already registered.';
+                    return;
+                }
+                users.push({
+                    name,
+                    email,
+                    password
+                });
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('currentUser', JSON.stringify({
+                    name,
+                    email
+                }));
+
+                // Redirect to index.html
+                window.location.href = 'index.html';
+            } else {
+                document.getElementById('message').textContent = 'Please fill all fields.';
+            }
+        });
+
+        // Handle login
+        document.getElementById('login').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // Check credentials
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(user => user.email === email && user.password === password);
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify({
+                    name: user.name,
+                    email: user.email
+                }));
+                // Redirect to index.html
+                window.location.href = 'index.html';
+            } else {
+                document.getElementById('message').textContent = 'Invalid email or password.';
+            }
+        });
+    </script>
+</body>
+
+</html>

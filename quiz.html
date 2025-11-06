@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Awareness Quiz | SakhiCircle</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff5f8;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        header {
+            background-color: #ffb6c1;
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            color: #b3005e;
+            font-size: 1.8rem;
+        }
+        
+        main {
+            flex: 1;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .quiz-container {
+            background-color: #ffe3ec;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .question {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b3005e;
+            margin-bottom: 1rem;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .options label {
+            width: 80%;
+            display: block;
+            background: white;
+            border-radius: 8px;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-align: left;
+        }
+        
+        .options label:hover {
+            border-color: #ff69b4;
+            background-color: #ffe9f1;
+        }
+        
+        .options input {
+            display: none;
+        }
+        
+        .options input:checked+span {
+            display: block;
+            width: 100%;
+            background-color: #ff69b4;
+            color: white;
+            border-radius: 8px;
+            padding: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        button {
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: 0.3s;
+        }
+        
+        button:hover {
+            background-color: #e75480;
+            transform: scale(1.05);
+        }
+        
+        .feedback {
+            margin-top: 1rem;
+            font-weight: 500;
+            color: #b3005e;
+        }
+        
+        .result {
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            color: #b3005e;
+            font-weight: 600;
+        }
+        
+        .summary {
+            text-align: left;
+            margin-top: 1.5rem;
+            background: #fff;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+        
+        .summary h3 {
+            color: #b3005e;
+            margin-bottom: 0.5rem;
+        }
+        
+        .summary p {
+            margin: 0.3rem 0;
+            font-weight: 500;
+        }
+        
+        .continue-options {
+            margin-top: 1.5rem;
+        }
+        
+        footer {
+            background-color: #ffd6dc;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1rem;
+            color: #6b003b;
+            margin-top: auto;
+        }
+        
+        .end-line {
+            margin-top: 0.5rem;
+            font-size: 1.2rem;
+            color: #b3005e;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>🎯 Test Your Knowledge – Menstrual Awareness Quiz</h1>
+    </header>
+
+    <main>
+        <section class="quiz-container" id="quiz">
+            <p class="question" id="question"></p>
+            <div class="options" id="options"></div>
+            <button id="nextBtn">Submit Answer</button>
+            <p class="feedback" id="feedback"></p>
+            <p class="result" id="result"></p>
+            <div class="summary" id="summary" style="display:none;"></div>
+            <div class="continue-options" id="continueOptions" style="display:none;">
+                <button id="continueBtn">Take Quiz 2</button>
+                <button id="homeBtn" onclick="goHome()">Back to Home</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>────────────── 🌷 ──────────────</p>
+    </footer>
+
+    <script>
+        const quizData = [
+            // Quiz 1: 10 questions
+            [{
+                question: "1. Myth or Fact: You cannot exercise during your period.",
+                options: ["Myth", "Fact"],
+                answer: "Myth",
+                explanation: "You can exercise during your period; it may even help with cramps!"
+            }, {
+                question: "2. What is the average length of a menstrual cycle?",
+                options: ["21 days", "28 days", "35 days", "42 days"],
+                answer: "28 days",
+                explanation: "The average menstrual cycle is 28 days, but it can vary."
+            }, {
+                question: "3. Myth or Fact: Menstrual blood is dirty and harmful.",
+                options: ["Myth", "Fact"],
+                answer: "Myth",
+                explanation: "Menstrual blood is not dirty; it's a natural bodily function."
+            }, {
+                question: "4. Which nutrient is especially important during menstruation to prevent anemia?",
+                options: ["Iron", "Calcium", "Vitamin C", "Protein"],
+                answer: "Iron",
+                explanation: "Iron helps replace blood loss and prevents fatigue."
+            }, {
+                question: "5. What causes menstrual cramps?",
+                options: ["Dehydration", "Uterine muscle contractions", "Stress", "Overeating"],
+                answer: "Uterine muscle contractions",
+                explanation: "Cramps are caused by the uterus contracting to shed its lining."
+            }, {
+                question: "6. Myth or Fact: Periods stop immediately if you get pregnant.",
+                options: ["Myth", "Fact"],
+                answer: "Myth",
+                explanation: "Pregnancy can cause missed periods, but bleeding might occur early on."
+            }, {
+                question: "7. What is PMS short for?",
+                options: ["Pre-Menstrual Syndrome", "Post-Menstrual Stress", "Periodic Mood Shift", "Primary Menstrual Symptom"],
+                answer: "Pre-Menstrual Syndrome",
+                explanation: "PMS includes symptoms like mood swings before your period."
+            }, {
+                question: "8. Which reusable product can be used during periods?",
+                options: ["Sanitary pads", "Menstrual cup", "Tampons (disposable)", "Tissues"],
+                answer: "Menstrual cup",
+                explanation: "Menstrual cups are eco-friendly and reusable."
+            }, {
+                question: "9. Myth or Fact: You can't swim or bathe during periods.",
+                options: ["Myth", "Fact"],
+                answer: "Myth",
+                explanation: "Swimming and bathing are fine; use a tampon or menstrual cup if needed."
+            }, {
+                question: "10. What phase of the menstrual cycle is ovulation?",
+                options: ["Menstruation", "Follicular", "Ovulation", "Luteal"],
+                answer: "Ovulation",
+                explanation: "Ovulation is when an egg is released, usually mid-cycle."
+            }],
+            // Quiz 2: Another 10 questions
+            [{
+                question: "1. Myth or Fact: Menstruation only happens to women.",
+                options: ["Myth", "Fact"],
+                answer: "Myth",
+                explanation: "Some transgender men and non-binary people also menstruate."
+            }, {
+                question: "2. How long does a typical period last?",
+                options: ["1-2 days", "3-7 days", "10-14 days", "21 days"],
+                answer: "3-7 days",
+                explanation: "Periods usually last 3-7 days, varying by person."
+            }, {
+                question: "3. Myth or Fact: Stress can delay your period.",
+                options: ["Myth", "Fact"],
+                answer: "Fact",
+                explanation: "Stress can affect hormones and delay menstruation."
+            }, {
+                question: "4. What is endometriosis?",
+                options: ["A type of infection", "Tissue growing outside the uterus", "Heavy bleeding", "Irregular cycles"],
+                answer: "Tissue growing outside the uterus",
+                explanation: "Endometriosis causes pain and can affect fertility."
+            }, {
+                question: "5. Myth or Fact: You lose a lot of blood during periods.",
+                options: ["Myth", "Fact"],
+                answer: "Myth",
+                explanation: "You lose about 30-80 ml, less than a cup."
+            }, {
+                question: "6. Which vitamin helps with period cramps?",
+                options: ["Vitamin A", "Vitamin B", "Vitamin D", "Vitamin E"],
+                answer: "Vitamin B",
+                explanation: "B vitamins can help reduce PMS symptoms."
+            }, {
+                question: "7. Myth or Fact: Periods sync up with friends.",
+                options: ["Myth", "Fact"],
+                answer: "Myth",
+                explanation: "No scientific evidence supports period syncing."
+            }, {
+                question: "8. What is the luteal phase?",
+                options: ["Bleeding phase", "After ovulation until period", "Before ovulation", "Entire cycle"],
+                answer: "After ovulation until period",
+                explanation: "It's the phase after ovulation, preparing for pregnancy."
+            }, {
+                question: "9. Myth or Fact: Menstrual products are taxed as luxury items in some places.",
+                options: ["Myth", "Fact"],
+                answer: "Fact",
+                explanation: "In many countries, tampons and pads are taxed, sparking movements for change."
+            }, {
+                question: "10. What should you do if your period is very irregular?",
+                options: ["Ignore it", "Consult a doctor", "Change diet only", "Exercise more"],
+                answer: "Consult a doctor",
+                explanation: "Irregular periods can indicate health issues; seek medical advice."
+            }]
+        ];
+
+        let currentQuiz = 0;
+        let currentQuestion = 0;
+        let score = 0;
+        const userAnswers = [];
+        let quizCompleted = false;
+
+        const questionEl = document.getElementById("question");
+        const optionsEl = document.getElementById("options");
+        const nextBtn = document.getElementById("nextBtn");
+        const feedbackEl = document.getElementById("feedback");
+        const resultEl = document.getElementById("result");
+        const summaryEl = document.getElementById("summary");
+        const continueOptionsEl = document.getElementById("continueOptions");
+        const continueBtn = document.getElementById("continueBtn");
+
+        function loadQuestion() {
+            const current = quizData[currentQuiz][currentQuestion];
+            questionEl.textContent = current.question;
+            optionsEl.innerHTML = "";
+            feedbackEl.textContent = "";
+
+            current.options.forEach(option => {
+                const label = document.createElement("label");
+                label.innerHTML = `<input type="radio" name="answer" value="${option}"><span>${option}</span>`;
+                optionsEl.appendChild(label);
+            });
+        }
+
+        nextBtn.addEventListener("click", () => {
+            const selected = document.querySelector('input[name="answer"]:checked');
+            if (!selected) {
+                alert("Please select an answer!");
+                return;
+            }
+
+            const userAnswer = selected.value;
+            const correctAnswer = quizData[currentQuiz][currentQuestion].answer;
+            const explanation = quizData[currentQuiz][currentQuestion].explanation;
+
+            userAnswers.push({
+                question: quizData[currentQuiz][currentQuestion].question,
+                user: userAnswer,
+                correct: correctAnswer,
+                explanation
+            });
+
+            if (userAnswer === correctAnswer) {
+                score++;
+                feedbackEl.innerHTML = `<span style="color: green;">Correct! 🎉</span><br>${explanation}`;
+            } else {
+                feedbackEl.innerHTML = `<span style="color: red;">Incorrect. The correct answer is: ${correctAnswer}</span><br>${explanation}`;
+            }
+
+            currentQuestion++;
+
+            if (currentQuestion < quizData[currentQuiz].length) {
+                setTimeout(() => loadQuestion(), 2000); // Delay to show feedback
+            } else {
+                showResult();
+            }
+        });
+
+        function showResult() {
+            quizCompleted = true;
+            questionEl.textContent = `Quiz ${currentQuiz + 1} Completed!`;
+            optionsEl.innerHTML = "";
+            nextBtn.style.display = "none";
+            feedbackEl.textContent = "";
+            resultEl.textContent = `You scored ${score} out of ${quizData[currentQuiz].length}! 🌸`;
+
+            // Display summary
+            summaryEl.style.display = "block";
+            summaryEl.innerHTML = `<h3>Your Answers Summary for Quiz ${currentQuiz + 1}:</h3>`;
+            userAnswers.forEach((ans, i) => {
+                summaryEl.innerHTML += `
+          <p><strong>${ans.question}</strong><br>
+          <span style="color:${ans.user === ans.correct ? 'green' : 'red'}">Your answer: ${ans.user}</span><br>
+          ✅ Correct: ${ans.correct}<br>
+          <em>${ans.explanation}</em></p><hr>
+        `;
+            });
+
+            if (currentQuiz === 0) {
+                continueOptionsEl.style.display = "block";
+            } else {
+                continueOptionsEl.innerHTML = '<button onclick="goHome()">Back to Home</button>';
+                continueOptionsEl.style.display = "block";
+            }
+        }
+
+        continueBtn.addEventListener("click", () => {
+            currentQuiz = 1;
+            currentQuestion = 0;
+            score = 0;
+            userAnswers.length = 0;
+            quizCompleted = false;
+            summaryEl.style.display = "none";
+            continueOptionsEl.style.display = "none";
+            resultEl.textContent = "";
+            nextBtn.style.display = "block";
+            loadQuestion();
+        });
+
+        function goHome() {
+            window.location.href = "index.html";
+        }
+
+        // Start quiz
+        loadQuestion();
+    </script>
+</body>
+
+</html>
